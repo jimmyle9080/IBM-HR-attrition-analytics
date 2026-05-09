@@ -128,40 +128,40 @@ The dataset has a roughly 5:1 imbalance (stayed:left). Addressed through:
 ## Chart Insights
 
 ### Employee Attrition Overview
-![Attrition Overview](outputs/charts/1_attrition_overview.png)
+![Attrition Overview](ibm_hr_project/outputs/charts/1_attrition_overview.png)
 - Sales has the highest department attrition at **20.6%**, followed by Human Resources at **19.0%**
 - The **18-25 age group** has a dramatically higher attrition rate (~35%) -- early career employees are the most at-risk cohort
 
 ### Attrition by Job Role
-![Job Role Analysis](outputs/charts/2_jobrole_analysis.png)
+![Job Role Analysis](ibm_hr_project/outputs/charts/2_jobrole_analysis.png)
 - **Sales Representatives** leave at **40.2%** -- more than double the company average
 - **Research Directors** have the lowest attrition at ~2.5% and the second highest income
 - There is a clear inverse relationship between income and attrition -- the lowest paid roles have the highest turnover
 
 ### Key Attrition Drivers
-![Attrition Drivers](outputs/charts/3_attrition_drivers.png)
+![Attrition Drivers](ibm_hr_project/outputs/charts/3_attrition_drivers.png)
 - **Overtime is the single strongest behavioral driver** -- 30.5% attrition for overtime workers vs 10.4% for non-overtime workers
 - **Job satisfaction score of 1** leads to 22.8% attrition vs 11.3% at score 4 -- a 2x difference
 
 ### Income & Tenure Analysis
-![Income and Tenure](outputs/charts/4_income_tenure_analysis.png)
+![Income and Tenure](ibm_hr_project/outputs/charts/4_income_tenure_analysis.png)
 - Employees who left earned **$4,787/mo on average vs $6,833/mo** for those who stayed -- a $2,046/mo gap
 - **First 2 years are the danger zone** -- 29.8% attrition rate, nearly 5x higher than the 11-20 year cohort at 6.7%
 
 ### Correlation Heatmap
-![Correlation Heatmap](outputs/charts/5_correlation_heatmap.png)
+![Correlation Heatmap](ibm_hr_project/outputs/charts/5_correlation_heatmap.png)
 - **OverTimeFlag has the strongest positive correlation with AttritionFlag (0.25)** among satisfaction and behavioral variables
 - **MonthlyIncome (-0.16), Age (-0.16), and YearsAtCompany (-0.13)** are all negatively correlated with attrition -- higher income and longer tenure reduce attrition risk
 - TotalWorkingYears is highly correlated with both Age (0.68) and MonthlyIncome (0.77), confirming that experience and compensation are deeply interconnected
 
 ### Feature Importance (Random Forest)
-![Feature Importance](outputs/charts/5_feature_importance.png)
+![Feature Importance](ibm_hr_project/outputs/charts/5_feature_importance.png)
 - **MonthlyIncome** is the single strongest predictor of attrition
 - **Age, DailyRate, TotalWorkingYears, and EmployeeNumber** round out the top 5
 - Surprisingly, OverTimeFlag ranked 13th out of 15 -- income and tenure are stronger structural predictors even though overtime shows stronger raw attrition rates in the EDA
 
 ### Model Performance Comparison
-![Model Comparison](outputs/charts/6_model_comparison.png)
+![Model Comparison](ibm_hr_project/outputs/charts/6_model_comparison.png)
 
 ## Skills Demonstrated
 
