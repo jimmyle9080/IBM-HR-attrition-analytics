@@ -37,11 +37,14 @@ This project covers the full analytics lifecycle: data cleaning and feature engi
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Run everything (VS Code: just press the play button on main.py)
+# 2. Navigate into the project folder
+cd ibm_hr_project
+
+# 3. Run everything (or open in VS Code and press the play button on main.py)
 python main.py
 ```
 
-Everything runs from `main.py` — no additional setup needed.
+Everything runs from `main.py` -- output folders are created automatically on first run.
 
 ## Project Structure
 
@@ -52,7 +55,8 @@ ibm_hr_project/
 ├── outputs/
 │   ├── charts/      # 6 professional visualizations
 │   └── exports/     # Power BI-ready CSV exports
-├── main.py          # Single entry point — run this
+├── ibm_hr_attrition.ipynb   # Jupyter notebook version
+├── main.py                  # Single entry point -- run this
 ├── requirements.txt
 └── README.md
 ```
@@ -67,7 +71,7 @@ ibm_hr_project/
 | 3_attrition_drivers.png | Overtime and job satisfaction impact |
 | 4_income_tenure_analysis.png | Income distribution and tenure breakdown |
 | 5_feature_importance.png | Top 15 attrition predictors (Random Forest) |
-| 6_model_comparison.png | AUC-ROC, AUPRC, Recall across 3 models |
+| 6_model_comparison.png | AUC-ROC, AUPRC, Recall across 6 models |
 
 ### Power BI Exports (outputs/exports/)
 | File | Description |
@@ -91,23 +95,27 @@ ibm_hr_project/
 - `SatisfactionScore` -- composite of Job, Environment, Relationship, WorkLife satisfaction
 - `AttritionFlag` -- binary target variable (0/1)
 - `IncomePerYear` -- annualized monthly income
+- `IncomeToAge`, `TenureRatio`, `SatXOvertime`, `PromotionLag`, `IncomeXSat`, `AgeXTenure`, `OTXSat`, `DistXOT` -- interaction features to improve model signal
 
 ### SQL Analysis
-SQLite used for all business-level aggregations:
+SQLite in-memory database used for all business-level aggregations:
 - Attrition rates by department, job role, age group, and tenure
 - Overtime impact analysis
 - Satisfaction score breakdown
 - High-risk employee identification (low satisfaction + overtime)
 
 ### Models
-Three models trained and benchmarked on attrition prediction:
-1. **Logistic Regression** -- interpretable baseline with class weighting
-2. **Random Forest** -- ensemble method, strong feature importance output
-3. **Gradient Boosting** -- sequential ensemble for high recall on attrition class
+Six models trained and benchmarked on attrition prediction:
+1. **Logistic Regression** -- interpretable baseline, strongest individual recall
+2. **Random Forest** -- ensemble method, best feature importance output
+3. **Gradient Boosting** -- sequential ensemble, strong precision-recall balance
+4. **AdaBoost** -- adaptive boosting, highest individual recall at 0.8936
+5. **Stacking Classifier** -- meta-learner combining all four base models
+6. **Weighted Ensemble** -- LR 40% + GB 25% + RF 20% + AdaBoost 15%, best overall balance
 
-Final risk scoring uses an **ensemble probability** (average of RF + GB) for employee risk tiering: Low / Medium / High / Critical.
+Final risk scoring uses the **Weighted Ensemble probability** for employee risk tiering: Low / Medium / High / Critical.
 
-### Model Performance Observations
+### Model Performance
 
 | Model | AUC-ROC | AUPRC | Recall | F1 |
 |---|---|---|---|---|
@@ -118,15 +126,15 @@ Final risk scoring uses an **ensemble probability** (average of RF + GB) for emp
 | Stacking Classifier | 0.7971 | 0.4558 | 0.5745 | 0.5047 |
 | **Weighted Ensemble** | **0.8163** | **0.5727** | **0.8085** | **0.4810** |
 
-**What drove these results:** All models trained on a 50/50 oversampled balanced training set. Decision threshold lowered to 0.38 to further boost recall. Eight interaction features engineered including IncomeToAge, TenureRatio, SatXOvertime, PromotionLag, IncomeXSat, AgeXTenure, OTXSat, and DistXOT. AdaBoost added as a fourth base learner alongside a StackingClassifier with a Logistic Regression meta-learner.
+**What drove these results:** All models trained on a 50/50 oversampled balanced training set. Decision threshold lowered to 0.38 to further boost recall on the minority attrition class. Eight interaction features engineered to improve model signal.
 
-**Why high recall matters here:** In HR analytics, missing a flight-risk employee is far more costly than a false positive retention conversation. AdaBoost achieves the highest individual recall at 0.8936 -- it correctly identifies nearly 9 out of 10 employees who will actually leave. The Weighted Ensemble (LR 40%, GB 25%, RF 20%, AdaBoost 15%) achieves the best overall balance at 0.8163 AUC and 0.8085 recall, making it the recommended production scoring model.
+**Why high recall matters here:** In HR analytics, missing a flight-risk employee is far more costly than a false positive retention conversation. AdaBoost achieves the highest individual recall at 0.8936 -- correctly identifying nearly 9 out of 10 employees who will actually leave. The Weighted Ensemble achieves the best overall balance at 0.8163 AUC and 0.8085 recall, making it the recommended production scoring model.
 
 ### Class Imbalance Handling
-The dataset has a roughly 5:1 imbalance (stayed:left). Addressed through:
-- **Class weighting** in Logistic Regression and Random Forest
-- **AUPRC as supplementary metric** alongside AUC-ROC
+- **Oversampling** minority class to 50/50 balance in the training set
+- **Decision threshold of 0.38** instead of default 0.5 to maximize recall
 - **Stratified train/test split** to preserve attrition ratio
+- **AUPRC as supplementary metric** alongside AUC-ROC
 
 ## Chart Insights
 
@@ -151,29 +159,28 @@ The dataset has a roughly 5:1 imbalance (stayed:left). Addressed through:
 - Employees who left earned **$4,787/mo on average vs $6,833/mo** for those who stayed -- a $2,046/mo gap
 - **First 2 years are the danger zone** -- 29.8% attrition rate, nearly 5x higher than the 11-20 year cohort at 6.7%
 
-### Correlation Heatmap
-![Correlation Heatmap](ibm_hr_project/outputs/charts/5_correlation_heatmap.png)
-- **OverTimeFlag has the strongest positive correlation with AttritionFlag (0.25)** among satisfaction and behavioral variables
-- **MonthlyIncome (-0.16), Age (-0.16), and YearsAtCompany (-0.13)** are all negatively correlated with attrition -- higher income and longer tenure reduce attrition risk
-- TotalWorkingYears is highly correlated with both Age (0.68) and MonthlyIncome (0.77), confirming that experience and compensation are deeply interconnected
-
 ### Feature Importance (Random Forest)
 ![Feature Importance](ibm_hr_project/outputs/charts/5_feature_importance.png)
 - **MonthlyIncome** is the single strongest predictor of attrition
 - **Age, DailyRate, TotalWorkingYears, and EmployeeNumber** round out the top 5
-- Surprisingly, OverTimeFlag ranked 13th out of 15 -- income and tenure are stronger structural predictors even though overtime shows stronger raw attrition rates in the EDA
+- OverTimeFlag ranked 13th out of 15 -- income and tenure are stronger structural predictors even though overtime shows stronger raw attrition rates in the EDA
+- The correlation heatmap (available in `ibm_hr_attrition.ipynb`) confirms OverTimeFlag has the strongest positive correlation with AttritionFlag at 0.25
 
 ### Model Performance Comparison
 ![Model Comparison](ibm_hr_project/outputs/charts/6_model_comparison.png)
+- **6 models trained and benchmarked** -- Logistic Regression, Random Forest, Gradient Boosting, AdaBoost, Stacking Classifier, and Weighted Ensemble
+- **AdaBoost achieves the highest recall at 0.8936** -- correctly identifying nearly 9 out of 10 employees who will actually leave
+- **Weighted Ensemble achieves the best overall balance** at 0.8163 AUC and 0.8085 recall
+- All models trained on a 50/50 oversampled balanced dataset with decision threshold of 0.38
 
 ## Skills Demonstrated
 
 - **Python** -- Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
-- **SQL** -- SQLite queries with aggregations, filtering, and business logic
+- **SQL** -- SQLite in-memory queries with aggregations, filtering, and business logic
 - **EDA** -- Univariate and multivariate analysis across 35 features
-- **Machine Learning** -- Classification, ensemble methods, class imbalance handling
-- **Feature Engineering** -- Derived features, composite scores, categorical grouping
-- **Model Evaluation** -- AUC-ROC, AUPRC, Precision, Recall, F1
+- **Machine Learning** -- Classification, ensemble methods, AdaBoost, Stacking, class imbalance handling
+- **Feature Engineering** -- Derived features, interaction terms, composite scores, categorical grouping
+- **Model Evaluation** -- AUC-ROC, AUPRC, Precision, Recall, F1, threshold tuning
 - **Business Storytelling** -- Translating analytical findings into HR strategy recommendations
 - **Power BI Integration** -- Structured CSV exports for live dashboard connection
 
