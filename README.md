@@ -109,15 +109,18 @@ Final risk scoring uses an **ensemble probability** (average of RF + GB) for emp
 
 ### Model Performance Observations
 
-| Model | AUC-ROC | AUPRC | Recall |
-|---|---|---|---|
-| Logistic Regression | 0.8042 | 0.6093 | 0.7021 |
-| Random Forest | 0.7683 | 0.4086 | 0.0851 |
-| Gradient Boosting | 0.7888 | 0.4397 | 0.1915 |
+| Model | AUC-ROC | AUPRC | Recall | F1 |
+|---|---|---|---|---|
+| Logistic Regression | 0.8155 | 0.6183 | 0.8298 | 0.4171 |
+| Random Forest | 0.7894 | 0.4370 | 0.5957 | 0.4956 |
+| Gradient Boosting | 0.7906 | 0.4756 | 0.6383 | 0.4918 |
+| AdaBoost | 0.8162 | 0.5070 | 0.8936 | 0.3818 |
+| Stacking Classifier | 0.7971 | 0.4558 | 0.5745 | 0.5047 |
+| **Weighted Ensemble** | **0.8163** | **0.5727** | **0.8085** | **0.4810** |
 
-**Key insight -- the Recall tradeoff:** Logistic Regression significantly outperforms the ensemble models on Recall (0.70 vs 0.09 for Random Forest). This is expected and explainable -- Logistic Regression with class weighting aggressively prioritizes catching the minority attrition class, making it the best model for proactively flagging at-risk employees. Random Forest without oversampling is more conservative and tends to predict the majority class (stayed) more often, which inflates accuracy but misses actual attrition cases.
+**What drove these results:** All models trained on a 50/50 oversampled balanced training set. Decision threshold lowered to 0.38 to further boost recall. Eight interaction features engineered including IncomeToAge, TenureRatio, SatXOvertime, PromotionLag, IncomeXSat, AgeXTenure, OTXSat, and DistXOT. AdaBoost added as a fourth base learner alongside a StackingClassifier with a Logistic Regression meta-learner.
 
-In a real HR analytics environment, **high recall is more valuable than high precision** -- it is far more costly to miss a flight-risk employee than to flag a false positive for a retention conversation. Logistic Regression is therefore the recommended production model for proactive HR intervention, while Random Forest provides the most reliable feature importance rankings.
+**Why high recall matters here:** In HR analytics, missing a flight-risk employee is far more costly than a false positive retention conversation. AdaBoost achieves the highest individual recall at 0.8936 -- it correctly identifies nearly 9 out of 10 employees who will actually leave. The Weighted Ensemble (LR 40%, GB 25%, RF 20%, AdaBoost 15%) achieves the best overall balance at 0.8163 AUC and 0.8085 recall, making it the recommended production scoring model.
 
 ### Class Imbalance Handling
 The dataset has a roughly 5:1 imbalance (stayed:left). Addressed through:
