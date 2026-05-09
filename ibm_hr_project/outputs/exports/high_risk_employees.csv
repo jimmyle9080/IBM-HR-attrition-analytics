@@ -1,0 +1,57 @@
+EmployeeNumber,Department,JobRole,Age,MonthlyIncome,YearsAtCompany,JobSatisfaction,EnvironmentSatisfaction,OverTime,Attrition,satisfaction_score
+1248,Research & Development,Research Scientist,19,1859,1,2,1,Yes,Yes,2.25
+614,Sales,Sales Representative,18,1878,0,2,2,Yes,Yes,2.75
+1053,Research & Development,Research Scientist,26,2042,3,1,1,Yes,Yes,1.75
+1569,Research & Development,Laboratory Technician,35,2074,1,1,1,Yes,Yes,2.25
+454,Research & Development,Laboratory Technician,29,2119,7,1,2,Yes,Yes,2.25
+1649,Research & Development,Laboratory Technician,40,2166,4,1,1,Yes,Yes,1.25
+478,Sales,Sales Representative,21,2174,3,2,1,Yes,Yes,2.25
+741,Research & Development,Research Scientist,28,2216,7,2,1,Yes,Yes,2.5
+1244,Research & Development,Research Scientist,27,2235,9,1,1,Yes,No,2.0
+1108,Research & Development,Research Scientist,33,2313,2,2,1,Yes,Yes,2.0
+816,Research & Development,Laboratory Technician,29,2319,1,1,2,Yes,Yes,2.5
+1844,Human Resources,Human Resources,29,2335,2,1,1,Yes,Yes,2.25
+1292,Research & Development,Research Scientist,42,2372,1,2,2,Yes,No,2.75
+394,Research & Development,Laboratory Technician,26,2373,3,2,1,Yes,Yes,2.5
+913,Research & Development,Research Scientist,44,2559,8,1,2,Yes,No,2.5
+248,Sales,Sales Representative,41,3140,4,2,2,Yes,Yes,2.5
+1494,Research & Development,Laboratory Technician,24,3172,0,1,2,Yes,Yes,2.0
+554,Sales,Sales Representative,24,3202,5,2,1,Yes,Yes,2.0
+21,Research & Development,Research Scientist,32,3298,6,2,1,Yes,No,2.25
+214,Research & Development,Research Scientist,58,3346,1,2,2,Yes,No,2.0
+702,Research & Development,Research Scientist,33,3348,10,1,1,Yes,Yes,1.5
+51,Research & Development,Research Scientist,36,3419,1,1,2,Yes,No,2.75
+267,Research & Development,Research Scientist,37,3564,8,1,2,Yes,No,1.5
+1458,Research & Development,Laboratory Technician,39,3646,1,1,1,Yes,Yes,2.0
+33,Research & Development,Research Scientist,32,3919,10,1,2,Yes,Yes,2.0
+1669,Sales,Sales Executive,29,4187,10,2,1,Yes,No,1.75
+1489,Sales,Sales Executive,34,4599,15,2,1,Yes,Yes,2.5
+1586,Research & Development,Laboratory Technician,29,4723,10,1,2,Yes,No,2.5
+390,Research & Development,Healthcare Representative,26,4741,5,1,1,Yes,No,2.0
+846,Sales,Sales Executive,28,4779,8,2,2,Yes,No,2.0
+161,Research & Development,Research Scientist,56,4963,5,2,2,Yes,Yes,2.0
+103,Human Resources,Human Resources,46,5021,4,2,2,Yes,No,2.75
+68,Sales,Sales Executive,44,5454,4,1,2,Yes,No,2.0
+1594,Research & Development,Laboratory Technician,36,5562,3,1,1,Yes,No,2.25
+382,Sales,Sales Executive,38,5605,8,1,1,Yes,No,2.0
+803,Research & Development,Manufacturing Director,38,5980,15,1,1,Yes,No,2.25
+1733,Sales,Sales Executive,36,6134,2,1,2,Yes,Yes,2.0
+2064,Research & Development,Manufacturing Director,27,6142,6,2,2,Yes,No,2.25
+1724,Research & Development,Manufacturing Director,40,6516,1,1,2,Yes,No,2.0
+282,Research & Development,Healthcare Representative,38,6673,1,1,2,Yes,Yes,2.0
+904,Sales,Sales Executive,37,7642,10,2,1,Yes,No,2.5
+1157,Sales,Sales Executive,33,8224,5,1,1,Yes,Yes,1.5
+1319,Sales,Sales Executive,52,8446,8,2,2,Yes,Yes,2.25
+1758,Sales,Sales Executive,33,8564,0,1,1,Yes,Yes,1.75
+699,Research & Development,Manufacturing Director,36,8847,3,2,2,Yes,No,2.5
+1425,Sales,Sales Executive,36,9278,5,2,1,Yes,No,2.5
+590,Human Resources,Human Resources,34,9950,3,1,2,Yes,Yes,2.25
+1968,Sales,Sales Executive,53,10448,2,1,1,Yes,Yes,1.5
+1460,Research & Development,Healthcare Representative,45,10851,7,1,2,Yes,No,2.0
+1015,Research & Development,Research Director,30,11416,8,1,2,Yes,No,2.0
+376,Research & Development,Manager,47,11849,10,2,1,Yes,Yes,2.25
+1321,Research & Development,Manager,30,11916,9,1,2,Yes,No,2.5
+1242,Research & Development,Research Director,42,13191,1,1,1,Yes,No,2.0
+986,Sales,Sales Executive,40,13194,1,2,2,Yes,Yes,2.5
+141,Research & Development,Research Director,50,18172,8,2,1,Yes,No,1.5
+1277,Sales,Manager,45,18824,24,2,1,Yes,Yes,1.75

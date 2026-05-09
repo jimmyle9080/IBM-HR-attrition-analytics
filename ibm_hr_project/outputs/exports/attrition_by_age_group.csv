@@ -1,0 +1,6 @@
+AgeGroup,total_employees,attrition_count,attrition_rate_pct,avg_monthly_income
+18-25,123,44,35.8,2973.0
+26-35,606,116,19.1,4896.0
+36-45,468,43,9.2,7104.0
+46-55,226,26,11.5,10928.0
+55+,47,8,17.0,9198.0

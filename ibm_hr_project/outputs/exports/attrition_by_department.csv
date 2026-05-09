@@ -1,0 +1,4 @@
+Department,total_employees,attrition_count,attrition_rate_pct,avg_monthly_income,avg_tenure_years
+Sales,446,92,20.6,6959.0,7.3
+Human Resources,63,12,19.0,6655.0,7.2
+Research & Development,961,133,13.8,6281.0,6.9
